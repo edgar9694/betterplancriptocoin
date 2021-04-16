@@ -1,0 +1,5 @@
+<div class="position-relative list-coin border">
+    <app-spinner *ngIf="!listLoaded && !errorState"></app-spinner>
+    <app-coin class="card my-2 p-2 coin" *ngFor="let coin of coins" [coin]="coin"></app-coin>
+    <app-error-state *ngIf="errorState" [message]="message"></app-error-state>
+</div>

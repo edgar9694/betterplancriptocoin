@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap'
+
+
+::-webkit-scrollbar 
+    width: 10px
+    height: 10px
+
+::-webkit-scrollbar-thumb 
+    background: #009fe3
+    border-radius: 10px
+
+::-webkit-scrollbar-thumb:hover
+    background: #0056b3
+
+::-webkit-scrollbar-track
+    background: #ffffff
+    border-radius: 10px
+    box-shadow: inset 7px 10px 12px #f0f0f0
+
+
+.btn-better
+    border-color: #009fe3
+    color: #009fe3
+
+    &:hover
+        background-color: #009fe3
+        color: #f0f0f0
+
+.btn-better-plan
+    background-color: #009fe3
+    // color: #009fe3 !important
+    border-color: #009fe3
+    border-radius: 50%
+
+
+.list-currencies
+    width: 100%
+    height: 200px
+    overflow: auto
+    overflow-x: hidden

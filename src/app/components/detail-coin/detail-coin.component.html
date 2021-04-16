@@ -1,0 +1,100 @@
+<div class="detail-coin col-sm-12 col-md-6 mx-auto position-relative border p-3 py-4 w-100">
+    <app-error-state *ngIf="errorState" [message]="message"></app-error-state>
+    <app-spinner *ngIf="!coinLoaded"></app-spinner>
+    <div class="coin-title mx-2 row">
+        <div class="col-10">
+            <h2>
+                <a class="return-link" [routerLink]="['/coins']"><fa-icon [icon]="chevronLeft"></fa-icon></a> {{ coin.name}}
+            </h2>
+            <h5>{{coin.id}}</h5>
+        </div>
+        <div class="col-2 d-flex align-items-center justify-content-center">
+            <img [src]="coin.image['small']" [alt]="coin.name" class="coin-image">
+        </div>
+    </div>
+    <div class="coin-numbers">
+        <div class="row mx-1 my-2">
+            <div class="col-8">
+                <h3>Precio: {{ currencyPrice }} {{ currency }}</h3>
+                <span *ngIf="currency.length > 0" (click)="collapse.toggle()" [attr.aria-expanded]="isCollapsed" aria-controls="collapseExample" class="click-pointer">
+                    Más Información 
+                </span>
+            </div>
+            <div class="col-4">
+                <div ngbDropdown>
+                    <div class="input-group">
+                        <input placeholder="Lista de monedas" class="form-control text-center" [formControl]="listCurrenciesForm"  id="listCurrencies" ngbDropdownToggle [ngModel]="currency" (input)="filterSelect()" />
+                        <span class="input-group-text" *ngIf="currency.length > 0" (click)="removePrice()"><fa-icon [icon]="chevronLeft"></fa-icon></span>
+                    </div>
+                    
+                    <div ngbDropdownMenu aria-labelledby="listCurrencies" class="list-currencies">
+                        <li class="text-center" ngbDropdownItem *ngFor="let currency of currenciesFiltered" (click)="setPrice(currency)">
+                            {{ currency }}
+                        </li>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-3" [ngClass]="{'d-none': currency.length === 0}">
+                <div class="w-100" #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed">
+                    <p>
+                        Capitalización de Mercado: {{ coin.market_data.market_cap[currency] | currency: currency }}
+                    </p>
+                    <p>
+                        Volumen de comercio en 24 horas: {{ coin.market_data.market_cap[currency] | currency: currency }}
+                    </p>
+                    <p>  
+                        Valoración tras la dilución total: {{ coin.market_data.fully_diluted_valuation[currency] | currency: currency }}
+                    </p>
+                    <p>
+                        Mínimo en 24h/Máximo en 24h: {{ coin.market_data.low_24h[currency] | currency: currency}}  / {{ coin.market_data.high_24h[currency] | currency: currency }}
+                    </p>
+                    <p>
+                        Cantidad circulante/Máxima: {{ coin.market_data.circulating_supply  }} / {{ coin.market_data.max_supply }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row border rounded m-2">
+            <div class="col-6 border-right">
+                <p class="text-center m-0 py-2">Rango: {{ coin.coingecko_rank}}</p>
+            </div>
+            <div class="col-6 border-left">
+               <p class="text-center m-0 py-2">Puntaje: {{ coin.coingecko_score}}</p>
+            </div>
+        </div>
+    </div>
+    <span class="px-2 text-decoration-underline" *ngIf="coin.description['es']">Descripción:</span>
+    <div class="coin-description p-2" *ngIf="coin.description['es']" [innerHTML]="coin.description['es']" >
+        <!-- {{  }} -->
+    </div>
+    <div class="coin-info mt-3 px-3 row">
+        <div  class="row w-100 px-2">
+            <div class="col-auto">
+                <span>Páginas web: </span>
+            </div>
+            <div class="col-auto">
+                <p class="p-0 m-0" *ngFor="let link of coin.links['homepage']">
+                    <a class="mx-1"  [href]="link" target="_blank" [ngClass]="{'d-none': link.length == 0, 'd-inline': link}">
+                        {{ link }}
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div  class="row w-100 px-2">
+            <div class="col">
+                <span>Páginas blockchain: </span>
+            </div>
+            <div class="col-auto">
+                <p class="p-0 m-0" *ngFor="let link of coin.links['blockchain_site']">
+                    <a class="mx-1"  [href]="link" target="_blank" [ngClass]="{'d-none': link.length == 0, 'd-inline': link}">
+                        {{ link }}
+                    </a>
+                </p>
+            </div>
+        </div>
+        <hr class="w-100 px-2" *ngIf="platform">
+        <div class="w-100" *ngIf="platform">
+            <p class="text-right" *ngFor="let link of coin.platforms | keyvalue">{{ link.key }} : {{ link.value }}</p>
+        </div>
+    </div>
+</div>

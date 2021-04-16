@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { CoinService } from './data/coin.service';
+import { CoinService } from './data/service/coin.service';
+import { Coin } from './data/schema/coin.model';
+import { noop, Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,17 +10,4 @@ import { CoinService } from './data/coin.service';
 })
 export class AppComponent {
   title = 'betterplan';
-
-  constructor(
-    private coins: CoinService
-  ) {
-    this.listCoins()
-  }
-
-  listCoins(){
-    this.coins.listCoins().subscribe(data =>{
-      console.log(data);
-      
-    })
-  }
 }

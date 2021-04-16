@@ -1,0 +1,7 @@
+<div class="dashboard border mx-auto d-flex flex-column align-items-center justify-content-center position-relative">
+    <h1 class="text-center">CriptoCoins</h1>
+    <button class="btn btn-better justify-content-end align-self-center my-4" [routerLink]="['/coins']">
+        Entrar
+    </button>
+    <app-error-state *ngIf="errorState" [message]="message"></app-error-state>
+</div>
